@@ -1,12 +1,19 @@
-const fs = require("fs/");
+const fs = require("fs/promises");
+const path = require("path");
 
+//* Раскомментируй и запиши значение
+const contactsPath = path.join(__dirname, "contacts.json");
 
-fs.readFile
-
-/*
- * Раскомментируй и запиши значение
-const contactsPath = ;
- */
+async function listContacts() {
+  try {
+    const data = await fs.readFile(contactsPath, "utf-8");
+    const contacts = JSON.parse(data);
+    return contacts;
+  } catch (error) {
+    console.error("Error reading contacts:", error.message);
+    return [];
+  }
+}
 
 // TODO: задокументировать каждую функцию
 function listContacts() {
