@@ -1,4 +1,5 @@
-// index.js
+//*Сделай импорт модуля contacts.js в файле index.js и проверь работоспособность функций для работы с контактами.
+
 const argv = require("yargs").argv;
 
 // TODO: рефакторить
