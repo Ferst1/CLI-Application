@@ -1,4 +1,7 @@
-// contacts.js
+const fs = require("fs/");
+
+
+fs.readFile
 
 /*
  * Раскомментируй и запиши значение
