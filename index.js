@@ -1,28 +1,47 @@
-//*Сделай импорт модуля contacts.js в файле index.js и проверь работоспособность функций для работы с контактами.
+import {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+} from "./contacts.js";
 
-const argv = require("yargs").argv;
+import { program } from "commander";
 
-// TODO: рефакторить
-function invokeAction({ action, id, name, email, phone }) {
-  switch (action) {
-    case "list":
-      // ...
-      break;
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-    case "get":
-      // ... id
-      break;
+program.parse(process.argv);
 
-    case "add":
-      // ... name email phone
-      break;
+const argv = program.opts();
 
-    case "remove":
-      // ... id
-      break;
+async function invokeAction({ action, id, name, email, phone }) {
+  try {
+    switch (action) {
+      case "list":
+        const contactList = await listContacts();
+        return console.table(contactList);
 
-    default:
-      console.warn("\x1B[31m Unknown action type!");
+      case "get":
+        const contactById = await getContactById(id);
+        return console.log(contactById);
+
+      case "add":
+        const addNewContact = await addContact({ name, email, phone });
+        return console.log(addNewContact);
+
+      case "remove":
+        const removeContactById = await removeContact(id);
+        return console.log(removeContactById);
+
+      default:
+        console.warn("\x1B[31m Unknown action type!");
+    }
+  } catch (error) {
+    throw error;
   }
 }
 
